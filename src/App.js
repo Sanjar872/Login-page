@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect,useState } from 'react'
+import Login from './Components/Login/Login'
+import Contact from './Components/Contact/Contact';
+import  './App.css'
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import { useNavigate } from 'react-router'
 
-function App() {
+import About from './Components/About/About';
+const App = () => {
+const navigator = useNavigate()
+const [render, setrender] = useState(false)
+let token =!!localStorage.getItem('login')
+
+useEffect(()=> {
+  token ? navigator('/about') : navigator('/')
+}, [render])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path='/' element={<Login/>} />
+
+
+        <Route path='/about' element={<About/>} />
+        <Route path='/contact' element={<Contact/>}/>
+      
+
+      </Routes>
+    
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
